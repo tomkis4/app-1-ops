@@ -6,16 +6,15 @@ pipeline {
         stage('Gracze online') {
             steps {
                 powershell '''
-                    $ErrorActionPreference = "Stop"
+                    ./steam/gracze.ps1
+                '''
+            }
+        }
 
-                    $appid = 730
-
-                    $url = "https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=$appid"
-
-                    $response = Invoke-RestMethod -Uri $url -UseBasicParsing -TimeoutSec 20
-
-                    Write-Host "Identyfikator gry: $appid"
-                    Write-Host "Liczba graczy online: $($response.response.player_count)"
+        stage('Nowosci od tworcow') {
+            steps {
+                powershell '''
+                    ./steam/nowosci.ps1
                 '''
             }
         }
