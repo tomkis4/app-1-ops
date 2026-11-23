@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -11,20 +12,21 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Budowanie aplikacji...'
-                sh 'echo Build successful'
+                bat 'echo Build successful'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Uruchamiam testy...'
-                sh 'echo Tests passed'
+                bat 'echo Tests passed'
             }
         }
 
         stage('Deploy') {
             steps {
                 echo 'Wdrażanie aplikacji...'
+                bat 'echo Deploy successful'
             }
         }
     }
@@ -33,6 +35,7 @@ pipeline {
         success {
             echo 'Pipeline zakończony sukcesem!'
         }
+
         failure {
             echo 'Pipeline zakończony błędem!'
         }
