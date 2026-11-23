@@ -2,42 +2,25 @@
 pipeline {
     agent any
 
-    stages {
-        stage('Hello') {
-            steps {
-                echo 'Witaj w Jenkins!'
-            }
-        }
+    parameters {
+        string(
+            name: 'GREETING',
+            defaultValue: 'Hello',
+            description: 'The greeting message'
+        )
 
-        stage('Build') {
-            steps {
-                echo 'Budowanie aplikacji...'
-                bat 'echo Build successful'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                echo 'Uruchamiam testy...'
-                bat 'echo Tests passed'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Wdrażanie aplikacji...'
-                bat 'echo Deploy successful'
-            }
-        }
+        choice(
+            name: 'BRANCH',
+            choices: ['master', 'dev'],
+            description: 'Branch to build'
+        )
     }
 
-    post {
-        success {
-            echo 'Pipeline zakończony sukcesem!'
-        }
-
-        failure {
-            echo 'Pipeline zakończony błędem!'
+    stages {
+        stage('Example') {
+            steps {
+                echo "${params.GREETING}, we are building the ${params.BRANCH} branch."
+            }
         }
     }
 }
