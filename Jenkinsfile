@@ -23,6 +23,13 @@ pipeline {
     }
 
     stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/PeterPorzuczek/TimeRiddle.git'
+            }
+        }
+
         stage('Example') {
             steps {
                 echo "${params.GREETING}, we are building the ${params.BRANCH} branch."
@@ -46,8 +53,10 @@ pipeline {
         success {
             echo 'Pipeline zakończony sukcesem!'
         }
+
         failure {
             echo 'Pipeline zakończony błędem!'
         }
     }
 }
+
